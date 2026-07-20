@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWAI File Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header-bar">
+        <h1>SWAI File Generator</h1>
+        <button id="generateBtn" class="suggested-action">Generate .swai</button>
+    </header>
+
+    <main class="content">
+        <form id="swaiForm">
+            <section class="preferences-group">
+                <h2>Basic Information</h2>
+                <div class="preferences-list">
+                    <div class="preference-row">
+                        <div class="row-label">
+                            <label for="appName">App Name <span class="required">*</span></label>
+                            <span class="subtitle">Display name used for the window/titlebar.</span>
+                        </div>
+                        <input type="text" id="appName" name="app_name" required placeholder="e.g., Google Docs">
+                    </div>
+                    <div class="preference-row">
+                        <div class="row-label">
+                            <label for="appId">App ID <span class="required">*</span></label>
+                            <span class="subtitle">Unique identifier for per-app data paths.</span>
+                        </div>
+                        <input type="text" id="appId" name="app_id" required placeholder="e.g., com.google.docs">
+                    </div>
+                    <div class="preference-row">
+                        <div class="row-label">
+                            <label for="mainUrl">Main URL <span class="required">*</span></label>
+                            <span class="subtitle">Initial URL to load.</span>
+                        </div>
+                        <input type="url" id="mainUrl" name="main_url" required placeholder="https://docs.google.com/">
+                    </div>
+                    <div class="preference-row">
+                        <div class="row-label">
+                            <label for="iconUrl">Icon URL/Path</label>
+                            <span class="subtitle">Local path or URL to an icon file.</span>
+                        </div>
+                        <div class="input-with-button">
+                            <input type="text" id="iconUrl" name="icon_url" placeholder="icon.png">
+                            <input type="file" id="iconFileInput" accept="image/*" class="hidden">
+                            <button type="button" id="iconBrowseBtn" class="secondary-action">Browse</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="preferences-group">
+                <h2>Navigation Rules</h2>
+                <div class="preferences-list">
+                    <div class="preference-row vertical">
+                        <div class="row-label">
+                            <label for="allowedUrls">Allowed URLs (One per line) <span class="required">*</span></label>
+                            <span class="subtitle">List of URL patterns the app is allowed to navigate to internally. Supports wildcards.</span>
+                        </div>
+                        <textarea id="allowedUrls" name="allowed_urls" rows="3" required placeholder="https://docs.google.com/*"></textarea>
+                    </div>
+                    <div class="preference-row vertical">
+                        <div class="row-label">
+                            <label for="notAllowedUrls">Not Allowed URLs (One per line)</label>
+                            <span class="subtitle">URL patterns explicitly disallowed (overrides allowed URLs).</span>
+                        </div>
+                        <textarea id="notAllowedUrls" name="not_allowed_urls" rows="2" placeholder="https://docs.google.com/external/*"></textarea>
+                    </div>
+                    <div class="preference-row vertical">
+                        <div class="row-label">
+                            <label for="loginUrls">Login URLs (One per line)</label>
+                            <span class="subtitle">URL patterns that trigger 'login mode' for external auth flows.</span>
+                        </div>
+                        <textarea id="loginUrls" name="login_urls" rows="2" placeholder="https://accounts.google.com/*"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section class="preferences-group">
+                <h2>Behavior & Ecosystem</h2>
+                <div class="preferences-list">
+                    <div class="preference-row">
+                        <div class="row-label">
+                            <label for="allowMultiWindow">Allow Multi Window</label>
+                            <span class="subtitle">Controls whether users can open multiple instances or tabs.</span>
+                        </div>
+                        <label class="switch"><input type="checkbox" id="allowMultiWindow" name="allow_multi_window" checked><span class="slider"></span></label>
+                    </div>
+                    <div class="preference-row">
+                        <div class="row-label">
+                            <label for="useDynamicTitlebarColors">Dynamic Titlebar Colors</label>
+                            <span class="subtitle">Automatically detect and apply website's theme color to titlebar.</span>
+                        </div>
+                        <label class="switch"><input type="checkbox" id="useDynamicTitlebarColors" name="use_dynamic_titlebar_colors" checked><span class="slider"></span></label>
+                    </div>
+                    <div class="preference-row">
+                        <div class="row-label">
+                            <label for="useManifest">Use Web App Manifest</label>
+                            <span class="subtitle">Automatically add scope and start_url from website's manifest.</span>
+                        </div>
+                        <label class="switch"><input type="checkbox" id="useManifest" name="use_manifest"><span class="slider"></span></label>
+                    </div>
+                    <div class="preference-row">
+                        <div class="row-label">
+                            <label for="ecosystem">Ecosystem</label>
+                            <span class="subtitle">Groups related apps to share sessions and cookies (e.g., microsoft365).</span>
+                        </div>
+                        <input type="text" id="ecosystem" name="ecosystem" placeholder="e.g., google-workspace">
+                    </div>
+                    <div class="preference-row">
+                        <div class="row-label">
+                            <label for="reuseWindowForEcosystemNavigation">Reuse Window (Ecosystem)</label>
+                            <span class="subtitle">Reuse current window when handing off to another app in ecosystem.</span>
+                        </div>
+                        <label class="switch"><input type="checkbox" id="reuseWindowForEcosystemNavigation" name="reuse_window_for_ecosystem_navigation"><span class="slider"></span></label>
+                    </div>
+                </div>
+            </section>
+
+            <section class="preferences-group">
+                <h2>Desktop Integration</h2>
+                <div class="preferences-list">
+                    <div class="preference-row">
+                        <div class="row-label">
+                            <label for="categories">Categories (comma separated)</label>
+                        </div>
+                        <input type="text" id="categories" name="categories" placeholder="Office, WordProcessor">
+                    </div>
+                    <div class="preference-row">
+                        <div class="row-label">
+                            <label for="keywords">Keywords (comma separated)</label>
+                        </div>
+                        <input type="text" id="keywords" name="keywords" placeholder="document, text">
+                    </div>
+                    <div class="preference-row">
+                        <div class="row-label">
+                            <label for="comment">Comment</label>
+                        </div>
+                        <input type="text" id="comment" name="comment" placeholder="Create and edit documents">
+                    </div>
+                </div>
+            </section>
+            
+            <section class="preferences-group">
+                <h2>Advanced</h2>
+                <div class="preferences-list">
+                    <div class="preference-row vertical">
+                        <div class="row-label">
+                            <label for="customUserAgent">Custom User Agent</label>
+                            <span class="subtitle">Override the default browser User-Agent string.</span>
+                        </div>
+                        <input type="text" id="customUserAgent" name="custom_user_agent" placeholder="Mozilla/5.0 ...">
+                    </div>
+                    <div class="preference-row vertical">
+                        <div class="row-label">
+                            <label for="customJs">Custom JS</label>
+                            <span class="subtitle">JavaScript injected once DOM is loaded.</span>
+                        </div>
+                        <textarea id="customJs" name="custom_js" rows="4" placeholder="console.log('App loaded');"></textarea>
+                    </div>
+                </div>
+            </section>
+        </form>
+        
+        <div id="outputContainer" class="hidden preferences-group">
+            <h2>Generated YAML</h2>
+            <div class="preferences-list">
+                <div class="preference-row vertical">
+                    <textarea id="outputYaml" rows="12" spellcheck="false" class="editable-output"></textarea>
+                </div>
+                <div class="preference-row" style="justify-content: flex-end;">
+                    <button id="downloadBtn" class="suggested-action">Download .swai</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
