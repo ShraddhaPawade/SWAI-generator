@@ -103,6 +103,7 @@ body {
     align-items: center;
     padding: 16px;
     border-bottom: 1px solid var(--border-color);
+    gap: 20px; 
 }
 
 .preference-row:last-child {
@@ -119,6 +120,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    flex: 1; 
 }
 
 label {
@@ -143,6 +145,7 @@ input[type="text"], input[type="url"], textarea {
     padding: 8px 12px;
     font-size: 1rem;
     width: 300px;
+    max-width: 100%;
     transition: all 0.2s;
     font-family: inherit;
 }
@@ -157,12 +160,12 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus {
     outline: none;
 }
 
-/* Toggle Switch inspired by Libadwaita */
 .switch {
     position: relative;
     display: inline-block;
     width: 44px;
     height: 24px;
+    flex-shrink: 0; 
 }
 
 .switch input { 
@@ -175,6 +178,14 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus {
     display: flex;
     gap: 8px;
     align-items: center;
+    max-width: 100%;
+}
+
+
+.input-with-button input[type="text"] {
+    width: 220px;
+    max-width: 100%;
+    flex: 1;
 }
 
 .secondary-action {
@@ -187,6 +198,7 @@ input[type="text"]:focus, input[type="url"]:focus, textarea:focus {
     cursor: pointer;
     transition: all 0.2s;
     font-weight: 500;
+    flex-shrink: 0; 
 }
 
 .secondary-action:hover {
@@ -253,4 +265,24 @@ input:checked + .slider:before {
     background: var(--input-bg-focus);
     border-color: var(--input-border-focus);
     outline: none;
+}
+
+
+@media (max-width: 600px) {
+    .preference-row:not(.vertical) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    input[type="text"], input[type="url"], .input-with-button {
+        width: 100% !important;
+    }
+    
+ 
+    .preference-row:has(.switch) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
